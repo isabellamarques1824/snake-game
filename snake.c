@@ -4,6 +4,8 @@
 #define cols 50
 #define rows 20
 
+int isGameOver = 0;
+
 char board[cols * rows];
 
 void fill_board()
@@ -40,6 +42,21 @@ void print_board()
     }
 }
 
+int snakeX = 5;
+int snakeY = 5;
+
+void draw_snake()
+{
+
+    board[snakeY * cols + snakeX] = '@';
+}
+
+void move_snake(int deltaX , int deltaY)
+{
+   snakeX += deltaX;
+   snakeY += deltaY;
+}
+
 void read_keyboard()
 {
 
@@ -56,10 +73,13 @@ void read_keyboard()
 
 int main(int argc, char **argv)
 {
-    fill_board();
-    print_board();
-
-    read_keyboard();
+    while (!isGameOver)
+    {
+        fill_board();
+        draw_snake();
+        print_board();
+        read_keyboard();
+    }
 
     return 0; 
 }
