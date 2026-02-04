@@ -42,19 +42,37 @@ void print_board()
     }
 }
 
-int snakeX = 5;
-int snakeY = 5;
+#define SNAKE_MAX_LEN 256
+
+struct SnakePart 
+{
+    int x,y;
+};
+
+struct Snake
+{
+    int length;
+    struct SnakePart part[SNAKE_MAX_LEN];
+     
+};
+
+struct Snake snake;
 
 void draw_snake()
 {
+    int i;
 
-    board[snakeY * cols + snakeX] = '@';
+    for(i = snake.length; i > 0; i--)
+    {
+        board[snake.part[i].y * cols + snake.part[i].x] = '*';
+    }
+    board[snake.part[0].y * cols + snake.part[0].x] = '*';
 }
 
 void move_snake(int deltaX , int deltaY)
 {
-   snakeX += deltaX;
-   snakeY += deltaY;
+   snake.part[0].x += deltaX;
+   snake.part[0].y += deltaY;
 }
 
 void read_keyboard()
@@ -73,6 +91,11 @@ void read_keyboard()
 
 int main(int argc, char **argv)
 {
+
+    snake.length = 1;
+    snake.part[0].x = 5;
+    snake.part[0].y = 5;
+    
     while (!isGameOver)
     {
         fill_board();
