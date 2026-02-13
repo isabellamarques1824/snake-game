@@ -52,8 +52,7 @@ struct SnakePart
 struct Snake
 {
     int length;
-    struct SnakePart part[SNAKE_MAX_LEN];
-     
+    struct SnakePart part[SNAKE_MAX_LEN]; 
 };
 
 struct Snake snake;
@@ -66,13 +65,19 @@ void draw_snake()
     {
         board[snake.part[i].y * cols + snake.part[i].x] = '*';
     }
-    board[snake.part[0].y * cols + snake.part[0].x] = '*';
+    board[snake.part[0].y * cols + snake.part[0].x] = '@';
 }
 
 void move_snake(int deltaX , int deltaY)
 {
-   snake.part[0].x += deltaX;
-   snake.part[0].y += deltaY;
+    int i; 
+
+    for(i = snake.length-1; i > 0; i--)
+    {
+        snake.part[i] = snake.part[i -1];
+    }
+    snake.part[0].x += deltaX;
+    snake.part[0].y += deltaY;
 }
 
 void read_keyboard()
@@ -92,9 +97,11 @@ void read_keyboard()
 int main(int argc, char **argv)
 {
 
-    snake.length = 1;
+    snake.length = 2;
     snake.part[0].x = 5;
     snake.part[0].y = 5;
+    snake.part[1].x = 5;
+    snake.part[1].y = 6;
     
     while (!isGameOver)
     {
